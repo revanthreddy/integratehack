@@ -303,62 +303,7 @@
 
               <div class="row">
 
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                  <div class="x_panel">
-                    <div class="x_title">
-                      <h2>Visitors location <small>geo-presentation</small></h2>
-                      <ul class="nav navbar-right panel_toolbox">
-                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                        <li class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                          <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Settings 1</a>
-                            </li>
-                            <li><a href="#">Settings 2</a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li><a class="close-link"><i class="fa fa-close"></i></a>
-                        </li>
-                      </ul>
-                      <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content">
-                      <div class="dashboard-widget-content">
-                        <div class="col-md-4 hidden-small">
-                          <h2 class="line_30">125.7k Views from 60 countries</h2>
-
-                          <table class="countries_list">
-                            <tbody>
-                              <tr>
-                                <td>United States</td>
-                                <td class="fs15 fw700 text-right">33%</td>
-                              </tr>
-                              <tr>
-                                <td>France</td>
-                                <td class="fs15 fw700 text-right">27%</td>
-                              </tr>
-                              <tr>
-                                <td>Germany</td>
-                                <td class="fs15 fw700 text-right">16%</td>
-                              </tr>
-                              <tr>
-                                <td>Spain</td>
-                                <td class="fs15 fw700 text-right">11%</td>
-                              </tr>
-                              <tr>
-                                <td>Britain</td>
-                                <td class="fs15 fw700 text-right">10%</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                        <div id="world-map-gdp" class="col-md-8 col-sm-12 col-xs-12" style="height:230px;"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                
 
               </div>
               <div class="row">
@@ -393,7 +338,7 @@
                     <div class="x_content">
                       <div class="row">
                         <div class="col-sm-12">
-                          <div class="temperature"><b>Monday</b>, 07:30 AM
+                          <div class="temperature"><b>Sunday</b>, 12:30 PM
                             <span>F</span>
                             <span><b>C</b></span>
                           </div>
@@ -407,7 +352,7 @@
                         </div>
                         <div class="col-sm-8">
                           <div class="weather-text">
-                            <h2>Texas <br><i>Partly Cloudy Day</i></h2>
+                            <h2>San Fransisco <br><i>Partly Cloudy Day</i></h2>
                           </div>
                         </div>
                       </div>
@@ -559,17 +504,22 @@
         });
       }});
 
+
+      setInterval(function(){ 
+        console.log('timeline');
         $.ajax({url: "/timeline", success: function(result){
           for(var i =0 ; i < result.length ; i++){
 
             var time = parseInt( result[i].date.substring(6, 19));
-            console.log(time);
-            console.log(moment(time).startOf('hour').fromNow());
             $("#user-timeline").append("<li>\r\n <div class=\"block\">\r\n <div class=\"block_content\">\r\n <h2 class=\"title\">\r\n <a>"+result[i].event_type+" "+result[i].room_name+"<\/a>\r\n <\/h2>\r\n <div class=\"byline\">\r\n <span>"+moment(time).startOf('hour').fromNow()+"<\/span> by <a>"+result[i].customer_name+"<\/a>\r\n <\/div>\r\n \r\n <\/div>\r\n <\/div>\r\n <\/li>")
 
           }
           
       }});
+
+
+      } , 2000);
+        
 
         $MENU_TOGGLE.on('click', function() {
           $(window).resize();
