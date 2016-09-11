@@ -81,3 +81,34 @@ app.get('/trends', function (req, res) {
 
 
 });
+
+
+app.get('/timeline', function (req, res) {
+  var path = "https://service.datadirectcloud.com/api/odata/realtycheck/eventses?$orderby=date&$format=json&$top=10";
+
+    var options = {
+      method: 'GET',
+      url: path,
+      headers: {
+        'authorization': 'Basic Y29vbjpDMDBuJkZyaWVuZHM='
+      }
+    }
+
+    request(options, function (error, response, body) {
+      try {
+        if (!error && response.statusCode == 200) {
+          var resp = JSON.parse(body);
+          res.status(200).json(resp.d.results);
+        } else {
+          console.error(error);
+          res.status(response.statusCode).json([]);
+          }
+      } catch (err) {
+        console.log(err);
+        res.status(response.statusCode).json([]);
+      }
+
+    });
+
+
+});
