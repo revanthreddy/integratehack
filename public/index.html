@@ -478,10 +478,14 @@
       
 
       $(document).ready(function() {
-        $.ajax({url: "/trends", success: function(result){
+
+        setInterval(function(){
+          $.ajax({url: "/trends", success: function(result){
           var graphData = [];
           var trends = result.trend_stats;
           var stats = result.house_stats;
+          $("#stats").empty();
+          $("#graph_bar").empty();
           for(var i =0 ; i < trends.length ; i++){
             graphData.push({ "period": trends[i].name, "Hours worked": trends[i].count });
 
@@ -505,6 +509,9 @@
           resize: true
         });
       }});
+        } , 2000);
+
+        
 
 
       setInterval(function(){ 
