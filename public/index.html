@@ -484,11 +484,13 @@
       $(document).ready(function() {
         $.ajax({url: "/trends", success: function(result){
           var graphData = [];
-          for(var i =0 ; i < result.length ; i++){
-            graphData.push({ "period": result[i].name, "Hours worked": result[i].count });
+          var trends = result.trend_stats;
+          console.log(trends);
+          for(var i =0 ; i < trends.length ; i++){
+            graphData.push({ "period": trends[i].name, "Hours worked": trends[i].count });
 
 
-            $("#stats").append("<div class=\"widget_summary\">\r\n <div class=\"w_left w_25\">\r\n <span>"+result[i].name+"<\/span>\r\n  <\/div>\r\n  <div class=\"w_right w_20\">\r\n <span>"+result[i].count+"<\/span>\r\n  <\/div>\r\n <div class=\"clearfix\"><\/div>\r\n                    <\/div>")
+            $("#stats").append("<div class=\"widget_summary\">\r\n <div class=\"w_left w_25\">\r\n <span>"+trends[i].name+"<\/span>\r\n  <\/div>\r\n  <div class=\"w_right w_20\">\r\n <span>"+trends[i].count+"<\/span>\r\n  <\/div>\r\n <div class=\"clearfix\"><\/div>\r\n                    <\/div>")
 
           }
           Morris.Bar({

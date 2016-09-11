@@ -41,46 +41,46 @@ app.listen(3000, function () {
 });
 
 
-app.get('/trends', function (req, res) {
-  var trends = [];
-  var topics = ["SquareFootage", "YearBuilt", "WhatsTheArea", "DoesItHaveAPool", "NumberOfBedrooms", "Stories", "NearbySchools"];
+// app.get('/trends', function (req, res) {
+//   var trends = [];
+//   var topics = ["SquareFootage", "YearBuilt", "WhatsTheArea", "DoesItHaveAPool", "NumberOfBedrooms", "Stories", "NearbySchools"];
 
-  async.eachSeries(topics, function (topic, callback) {
+//   async.eachSeries(topics, function (topic, callback) {
 
-    var path = "https://service.datadirectcloud.com/api/odata/realtycheck/trendses/$count?$filter=question eq '"+topic+"'";
+//     var path = "https://service.datadirectcloud.com/api/odata/realtycheck/trendses/$count?$filter=question eq '"+topic+"'";
 
-    var options = {
-      method: 'GET',
-      url: path,
-      headers: {
-        'authorization': 'Basic Y29vbjpDMDBuJkZyaWVuZHM='
-      }
-    }
+//     var options = {
+//       method: 'GET',
+//       url: path,
+//       headers: {
+//         'authorization': 'Basic Y29vbjpDMDBuJkZyaWVuZHM='
+//       }
+//     }
 
-    request(options, function (error, response, body) {
-      try {
-        if (!error && response.statusCode == 200) {
-          trends.push({"name" : topic , "count" : response.body});
-          callback(null , true);
-        } else {
-          console.error(error);
-          callback(error , null)
-        }
-      } catch (err) {
-        console.log(err);
+//     request(options, function (error, response, body) {
+//       try {
+//         if (!error && response.statusCode == 200) {
+//           trends.push({"name" : topic , "count" : response.body});
+//           callback(null , true);
+//         } else {
+//           console.error(error);
+//           callback(error , null)
+//         }
+//       } catch (err) {
+//         console.log(err);
 
-      }
+//       }
 
-    });
+//     });
 
-  }, function (err, result) {
+//   }, function (err, result) {
 
-    return res.status(200).json(trends);
+//     return res.status(200).json(trends);
 
-  });
+//   });
 
 
-});
+// });
 
 
 app.get('/timeline', function (req, res) {
@@ -99,6 +99,38 @@ app.get('/timeline', function (req, res) {
         if (!error && response.statusCode == 200) {
           var resp = JSON.parse(body);
           res.status(200).json(resp.d.results);
+        } else {
+          console.error(error);
+          res.status(response.statusCode).json([]);
+          }
+      } catch (err) {
+        console.log(err);
+        res.status(response.statusCode).json([]);
+      }
+
+    });
+
+
+});
+
+
+
+app.get('/trends', function (req, res) {
+  var path = "http://ec2-54-161-139-208.compute-1.amazonaws.com:8000/stats";
+
+    var options = {
+      method: 'GET',
+      url: path ,
+      header :{
+        'Content-Type' : 'application/json'
+      }
+    }
+
+    request(options, function (error, response, body) {
+      try {
+        if (!error && response.statusCode == 200) {
+          var resp = JSON.parse(body);
+          res.status(200).json(resp);
         } else {
           console.error(error);
           res.status(response.statusCode).json([]);
