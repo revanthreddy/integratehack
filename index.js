@@ -84,7 +84,7 @@ app.listen(3000, function () {
 
 
 app.get('/timeline', function (req, res) {
-  var path = "https://service.datadirectcloud.com/api/odata/realtycheck/eventses?$orderby=date&$format=json&$top=10";
+  var path = "https://service.datadirectcloud.com/api/odata/realtycheck/eventses?$orderby=date desc&$format=json&$top=10";
 
     var options = {
       method: 'GET',
